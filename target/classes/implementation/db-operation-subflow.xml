@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="post-subflow" doc:id="39374218-252c-4593-bdb8-1b68ea4223eb" >
+		<logger level="INFO" doc:name="post-start-Logger" doc:id="6d8a5214-3740-4739-8e4d-0b515fb7eb6d" message="===post flow started===="/>
+		<set-payload value="#[%dw 2.0&#10;output application/java&#10;---&#10;{&#10;	full_name: payload.full_name,&#10;	salary: payload.salary,&#10;	profession: payload.profession&#10;}]" doc:name="Set Payload" doc:id="0e9e099b-c65f-4525-a67d-38f0e12898c8" />
+		<db:insert doc:name="Insert" doc:id="6fc66c7a-d582-4f6a-8c2d-46fbce6589af" config-ref="Database_Config">
+			<db:sql><![CDATA[${secure::sql.insertQuery}]]></db:sql>
+			<db:input-parameters><![CDATA[#[payload]]]></db:input-parameters>
+		</db:insert>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  message: "successfully created",&#10;  empId: 2&#10;}]' doc:name="Set Payload" doc:id="888a4c26-dc2e-400b-8886-c997da6a5764" />
+		<logger level="INFO" doc:name="post-end-Logger" doc:id="329ea5e3-2faa-4440-9450-4eeef98d046d" message="===post flow ended===="/>
+	</sub-flow>
+	<sub-flow name="get-employee" doc:id="6dd95ec7-6f5b-4a6a-bc64-915046c4e46a" >
+		<logger level="INFO" doc:name="get-start-Logger" doc:id="9945133f-0fdf-448f-b915-34e84e823fbd" message="===get flow started===="/>
+		<set-variable value="#[attributes.uriParams.'empId']" doc:name="Set Variable" doc:id="24dccd90-6584-4085-8653-e8c579d70798" variableName="empId"/>
+		<db:select doc:name="Select" doc:id="3880ebde-a656-46e9-8988-9114dcc752b5" config-ref="Database_Config">
+			<db:sql><![CDATA[${secure::sql.selectQueryById}]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	empId: vars.empId
+}]]]></db:input-parameters>
+		</db:select>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload[0]]" doc:name="Set Payload" doc:id="80af040a-da20-40ba-924c-a33972570e18" />
+		<logger level="INFO" doc:name="get-end-Logger" doc:id="3734d69a-e345-4490-9c41-873fb0295bf5" message="===get flow ended===="/>
+	</sub-flow>
+	<sub-flow name="get-subflow" doc:id="e403e83f-1938-46d0-8edb-7aa7cd4f8945" >
+		<logger level="INFO" doc:name="get-start-Logger" doc:id="e47a2212-896c-42b7-a26c-2b0b7978898b" message="===get flow started===="/>
+		<db:select doc:name="Select" doc:id="3515d4de-b095-4da5-93fc-d8adcd0c6816" config-ref="Database_Config">
+			<db:sql><![CDATA[${secure::sql.selectAllQuery}]]></db:sql>
+		</db:select>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Set Payload" doc:id="9cd9f110-7dec-4dc7-8a36-0a90eda43a48" />
+		<logger level="INFO" doc:name="get-end-Logger" doc:id="efcd78e6-c122-4582-9779-d0aaddcad0ba" message="===get flow ended===="/>
+	</sub-flow>
+	<sub-flow name="delete-subflow" doc:id="ba7a99eb-4e30-428e-882d-e60cffaadbb8" >
+		<logger level="INFO" doc:name="delete-start-Logger" doc:id="317d36f2-68bc-4a1e-92b1-8f398a9701ca" message="===delete flow started===="/>
+		<set-variable value="#[attributes.uriParams.'empId']" doc:name="Set Variable" doc:id="8e6180d3-d9c7-4ca8-8b43-2eb705377334" variableName="empId"/>
+		<db:delete doc:name="Delete" doc:id="9bd35667-3497-4f4f-a0ea-8fb2da65aab0" config-ref="Database_Config">
+			<db:sql><![CDATA[${secure::sql.deleteQueryById}]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	empId: vars.empId
+}]]]></db:input-parameters>
+		</db:delete>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  message: "successfully deleted",&#10;  empId: vars.empId&#10;}]' doc:name="Set Payload" doc:id="500daf6f-7ddf-4906-9827-c7941b54ddac" />
+		<logger level="INFO" doc:name="delete-end-Logger" doc:id="d8105cf5-db3d-4660-b038-8e59f03a21f2" message="===delete flow ended===="/>
+	</sub-flow>
+	<sub-flow name="put-subflow" doc:id="901e102f-99e3-4c71-95ba-99344ecc0a21" >
+		<logger level="INFO" doc:name="put-start-Logger" doc:id="ebbd6567-a007-4bf5-9b0a-00c349f38df8" message="===put flow started===="/>
+		<set-variable value="#[attributes.uriParams.'empId']" doc:name="Set Variable" doc:id="19be6457-c838-4b44-bcb7-40ddc3e35960" variableName="empId"/>
+		<db:update doc:name="Update" doc:id="58384d34-fd5b-45a5-a37e-d033e45202b7" config-ref="Database_Config">
+			<db:sql><![CDATA[${secure::sql.updateQuery}]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	empId: vars.empId
+}]]]></db:input-parameters>
+		</db:update>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  message: "successfully updated",&#10;  empId: vars.empId&#10;}]' doc:name="Set Payload" doc:id="2c2a0fa7-c883-482e-8829-5c8965cd76a4" />
+		<logger level="INFO" doc:name="put-end-Logger" doc:id="08994b72-5017-42fd-9173-8ab810aeedc9" message="===put flow ended===="/>
+	</sub-flow>
+</mule>

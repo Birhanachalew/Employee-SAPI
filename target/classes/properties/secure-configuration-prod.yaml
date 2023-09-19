@@ -1,0 +1,15 @@
+http:
+  host: "![sn0/bkKC48z/NTUjMAQSqg==]"
+  port: "![7lfNJW6/zOc=]"
+sql:
+  selectAllQuery: "![61bNFFBO2IlDYHzxCrWnQ6en+11bVhTx/ZTjU+Vm/aOKKNK+JJ3am98OcTo1DKVI]"
+  selectQueryById: "![61bNFFBO2IlDYHzxCrWnQ6en+11bVhTx/ZTjU+Vm/aOhkkG0+kPbrwrc9iXFQQAceKX8zcVgBh/OFYLvvf+zPw==]"
+  insertQuery: "![YMBOvVgGusdUECtPQoWVx8kbDTWliuTXaWwDd1mtAkGdk3WCE4SryfzrsrwbN6gcHhJSb/dkLe3MsSW1mnKh7In3iIQGXbgahQHOUOcekO5Wze/+HmLBOM1ueOvOEVIGSWw8rFSnnVZCac4tu2BuNu/ef2V+6kQN]"
+  updateQuery: "![89UPOb6l08HoqK0uSND2K1iy8C7p+0/2Lgl9tHpnu4sUuD0D/YGmbWtYdAonU4eDBjkWa9qR+NRBVOc6XFts1NN1VrzgCPqWiY0koj4i/tG7GE9JDozQspRZ3mnTOSf6zapFvfr6B1WapSG/78PoUIiUZy5MIPfSlbkaOLkzyoZb30oc2kdTGA==]"
+  deleteQueryById: "![Jp6pDvHj+AxFWv5kiJJM2pZXPkq7KY/w5c8byS/q61Bbz7GxtRWPPFQ8RGTHcl+k84DFvi75kG5MccpfAZffmw==]"
+db:
+  host: "![sn0/bkKC48z/NTUjMAQSqg==]"
+  port: "![GsCqbJEvqpI=]"
+  user: "![kGUrMSl4q+g=]"
+  password: "![SEUKP9vRUIHucYoIMMCYdA==]"
+

@@ -1,0 +1,14 @@
+[
+{
+  "empId": 1,
+  "full_name": "derek zair",
+  "salary": 23000,
+  "profession": "engineer"
+},
+{
+  "empId": 2,
+  "full_name": "fole sai",
+  "salary": 23000,
+  "profession": "accountant"
+}
+] 

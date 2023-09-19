@@ -1,0 +1,10 @@
+%dw 2.0
+
+type auto_6dd95ec7_6f5b_4a6a_bc64_915046c4e46a_Input_Payload = {
+  profession: String, 
+  empId: Number, 
+  full_name: String, 
+  salary: Number, 
+  _?: Any
+}
+
